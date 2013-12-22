@@ -1,0 +1,3 @@
+PROBLEM: ERROR: configuration failed for package 'RCurl'
+VIDE:	 http://www.omegahat.org/RCurl/FAQ.html
+SOLUCAO: sudo apt-get install libcurl4-openssl-dev
