@@ -6,3 +6,18 @@ install.packages("ROAuth")
 install.packages("twitteR")
 install.packages("wordcloud")
 install.packages("tm")
+
+## OAuth:
+reqURL <- "https://api.twitter.com/oauth/request_token"
+accessURL <- "http://api.twitter.com/oauth/access_token"
+authURL <- "http://api.twitter.com/oauth/authorize"
+consumerKey <- ""
+consumerSecret <- ""
+twitCred <- OAuthFactory$new(consumerKey=consumerKey,
+                                    consumerSecret=consumerSecret,
+                                    requestURL=reqURL,
+                                    accessURL=accessURL,
+                                    authURL=authURL)       
+twitCred$handshake() 
+# enter pin, then      
+registerTwitterOAuth(twitCred)
