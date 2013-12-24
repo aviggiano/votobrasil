@@ -1,0 +1,8 @@
+sudo apt-get install libcurl4-openssl-dev
+
+#R console
+#install the necessary packages
+install.packages("ROAuth")
+install.packages("twitteR")
+install.packages("wordcloud")
+install.packages("tm")
