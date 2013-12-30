@@ -10,6 +10,8 @@ urlpatterns = patterns('',
         name='votos',),
     url(r'^users/', votos.views.ListUsersView.as_view(),
         name='users',),
+    url(r'^new$', votos.views.CreateUserView.as_view(),
+        name='users-new',),
     # Examples:
     # url(r'^$', 'votobrasil.views.home', name='home'),
     # url(r'^votobrasil/', include('votobrasil.foo.urls')),
