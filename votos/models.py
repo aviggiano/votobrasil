@@ -1,4 +1,5 @@
 from django.db import models
+from django.core.urlresolvers import reverse
 
 # Create your models here.
 class User(models.Model):
@@ -15,6 +16,10 @@ class User(models.Model):
             self.username,
             self.email,
         ])
+
+    def get_absolute_url(self):
+
+        return reverse('users-view', kwargs={'pk': self.id})
 
 class Voto(models.Model):
 

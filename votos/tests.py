@@ -10,9 +10,11 @@ from django.test import LiveServerTestCase
 from django.test.client import Client
 from django.test.client import RequestFactory
 from selenium.webdriver.firefox.webdriver import WebDriver
+from rebar.testing import flatten_to_dict
 from votos.models import Voto
 from votos.models import User
 from votos.views import *
+from votos import forms
 
 class SimpleTest(TestCase):
     def test_basic_addition(self):
@@ -95,7 +97,7 @@ class UserListIntegrationTests(LiveServerTestCase):
         self.selenium.get('%s%s' % (self.live_server_url, '/users/'))
         self.assertEqual(
             self.selenium.find_elements_by_css_selector('.user')[0].text,
-            'foo,foo@bar.com'
+            'foo,foo@bar.com (edit)' # mudar esse teste! ele esta horrivel
         )
 
     def test_add_user_linked(self):
@@ -111,9 +113,31 @@ class UserListIntegrationTests(LiveServerTestCase):
 
         self.selenium.find_element_by_id('id_username').send_keys('test')
         self.selenium.find_element_by_id('id_email').send_keys('test@example.com')
+        self.selenium.find_element_by_id('id_confirm_email').send_keys('test@example.com')
 
         self.selenium.find_element_by_id("save-user").click()
         self.assertEqual(
             self.selenium.find_elements_by_css_selector('.user')[-1].text,
-            'test,test@example.com'
+            'test,test@example.com (edit)' # mudar esse teste! ele esta horrivel
         )
+
+class EditUserFormTests(TestCase):
+
+    def test_mismatch_email_is_invalid(self):
+
+        form_data = flatten_to_dict(forms.UserForm())
+        form_data['username'] = 'Foo'
+        form_data['email'] = 'foo@bar.com'
+        form_data['confirm_email'] = 'x@y.com'
+
+        bound_form = forms.UserForm(data=form_data)
+        self.assertFalse(bound_form.is_valid())
+
+    def test_same_email_is_valid(self):
+
+        form_data = flatten_to_dict(forms.UserForm())
+        form_data['username'] = 'Foo'
+        form_data['email'] = 'foo@bar.com'
+        form_data['confirm_email'] = 'foo@bar.com'
+        bound_form = forms.UserForm(data=form_data)
+        self.assert_(bound_form.is_valid())

@@ -1,4 +1,5 @@
 from django.conf.urls import patterns, include, url
+from django.contrib.staticfiles.urls import staticfiles_urlpatterns # usado em dev
 
 # Uncomment the next two lines to enable the admin:
 # from django.contrib import admin
@@ -12,6 +13,12 @@ urlpatterns = patterns('',
         name='users',),
     url(r'^new$', votos.views.CreateUserView.as_view(),
         name='users-new',),
+    url(r'^edit/(?P<pk>\d+)/$', votos.views.UpdateUserView.as_view(),
+        name='users-edit',),
+    url(r'^delete/(?P<pk>\d+)/$', votos.views.DeleteUserView.as_view(),
+        name='users-delete',),
+    url(r'^(?P<pk>\d+)/$', votos.views.UserView.as_view(),
+        name='users-view',),
     # Examples:
     # url(r'^$', 'votobrasil.views.home', name='home'),
     # url(r'^votobrasil/', include('votobrasil.foo.urls')),
@@ -22,3 +29,5 @@ urlpatterns = patterns('',
     # Uncomment the next line to enable the admin:
     # url(r'^admin/', include(admin.site.urls)),
 )
+
+urlpatterns += staticfiles_urlpatterns() # usado em dev
