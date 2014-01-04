@@ -8,6 +8,16 @@
   <body>
     {% block content %}
     {% endblock %}
+    <div>
+      <h1>
+	{{ user }}
+      </h1>
+      {% if user.is_anonymous %}
+      <a href="{% url 'django.contrib.auth.views.login' %}">login</a>
+      {% else %}
+      <a href="{% url 'django.contrib.auth.views.logout' %}">logout</a>
+      {% endif %}
+    </div>
 
     <script src="{% static 'js/bootstrap.min.js' %}"></script>
   </body>

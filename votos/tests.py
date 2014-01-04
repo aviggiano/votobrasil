@@ -16,6 +16,9 @@ from votos.models import User
 from votos.views import *
 from votos import forms
 
+import django.http
+import django.utils.unittest as unittest2
+
 class SimpleTest(TestCase):
     def test_basic_addition(self):
         """
@@ -128,6 +131,7 @@ class EditUserFormTests(TestCase):
         form_data = flatten_to_dict(forms.UserForm())
         form_data['username'] = 'Foo'
         form_data['email'] = 'foo@bar.com'
+        # form_data['owner'].selected = self.owner
         form_data['confirm_email'] = 'x@y.com'
 
         bound_form = forms.UserForm(data=form_data)
@@ -138,6 +142,27 @@ class EditUserFormTests(TestCase):
         form_data = flatten_to_dict(forms.UserForm())
         form_data['username'] = 'Foo'
         form_data['email'] = 'foo@bar.com'
+        # form_data['owner'].selected = self.owner
         form_data['confirm_email'] = 'foo@bar.com'
         bound_form = forms.UserForm(data=form_data)
         self.assert_(bound_form.is_valid())
+
+class LocaleMiddlewareTests(unittest2.TestCase):
+
+    def test_request_not_processed(self):
+
+        middleware = LocaleMiddle()
+        response = django.http.HttpResponse()
+        middleware.process_response(none, response)
+
+        self.assertFalse(response.cookies)
+
+class TestClient(TestCase):
+
+    def test_client(self):
+
+        c = Client()
+        response = c.get('/login/')
+        self.assertEqual(response.status_code, 200)
+
+        response = c.post('/login/', {'username': 'root', 'password': 'root'})

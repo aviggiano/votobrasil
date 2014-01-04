@@ -1,7 +1,7 @@
 from django import forms
 from django.core.exceptions import ValidationError
-
-from votos.models import User
+from django.forms.models import inlineformset_factory
+from votos.models import User, Voto
 
 class UserForm(forms.ModelForm):
     confirm_email = forms.EmailField(
@@ -27,3 +27,9 @@ class UserForm(forms.ModelForm):
             )
 
         return self.cleaned_data
+
+# inlineformset_factory creates a Class from a parent model (User) to a child model (Voto)
+UserVotoFormSet = inlineformset_factory(
+    User,
+    Voto,
+)

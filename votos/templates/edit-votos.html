@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h1>
+  Edit Votos
+</h1>
+
+<p>
+  Editing votos for <b>{{ object.username }}</b>
+</p>
+
+<form action="{% url "users-edit-votos" pk=object.id %}"
+      method="POST">
+  {% csrf_token %}
+  {{ form.management_form }}
+  
+  {% for voto_form in form %}
+  <ul>
+    {{ voto_form.as_ul }}
+  </ul>
+  {% endfor %}
+  
+  <input type="submit" value="Save"/>
+</form>
+
+{% endblock %}

@@ -6,4 +6,13 @@
 
 <p>Email: {{ object.email }}</p>
 
+<ul>
+{% for v in object.voto_set.all %}
+<li>
+{{ v.partido }} <br/>
+{{ v.num_votos }} 
+</li>
+{% endfor %}
+</ul>
+
 {% endblock %}

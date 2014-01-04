@@ -112,6 +112,7 @@ ROOT_URLCONF = 'votobrasil.urls'
 WSGI_APPLICATION = 'votobrasil.wsgi.application'
 
 TEMPLATE_DIRS = (
+    'votobrasil/templates',
     # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
@@ -159,3 +160,7 @@ LOGGING = {
         },
     }
 }
+
+# setado por agfv
+LOGIN_REDIRECT_URL = '/'
+LOGIN_URL = 'django.contrib.auth.views.login'
