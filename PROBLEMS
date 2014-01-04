@@ -1,3 +1,7 @@
 PROBLEM: ERROR: configuration failed for package 'RCurl'
 VIDE:	 http://www.omegahat.org/RCurl/FAQ.html
 SOLUCAO: sudo apt-get install libcurl4-openssl-dev
+
+PROBLEM: Error: pg_config executable not found.
+VIDE:	 http://stackoverflow.com/questions/11618898/pg-config-executable-not-found
+SOLUCAO: apt-get build-dep python-psycopg2
