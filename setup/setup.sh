@@ -7,4 +7,3 @@ virtualenv venv --distribute
 #install requirements with virtualenv and pip
 source venv/bin/activate
 pip install -r requirements.txt
-
