@@ -8,4 +8,5 @@ def t(value):
    r = api.request('search/tweets', {'q':'brasil'})
    for item in r.get_iterator():
       print item
+   return item['text']
       
