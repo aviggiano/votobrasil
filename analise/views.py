@@ -1,3 +1,8 @@
-from django.shortcuts import render
+from django.views.generic import ListView
+from analise.models import Tweet
 
-# Create your views here.
+
+class ListTweetView(ListView):
+
+    model = Tweet
+    template_name = 'tweet-list.html'

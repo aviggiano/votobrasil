@@ -2,23 +2,49 @@ from django.db import models
 
 class User(models.Model):
 
-    username = models.CharField(
+    user = models.CharField(
         max_length=255,
     )
 
-    email = models.EmailField()
+    id_str = models.CharField(
+        max_length=255,
+    )
+    
+    geo = models.CharField(
+        max_length=255,
+    )
+    
+    def __str__(self):
 
-    owner = models.ForeignKey(auth.models.User)
+        return ';'.join([
+            self.user,
+            self.id_str,
+            self.geo,
+        ])
+
+class Tweet(models.Model):
+
+    user = models.ForeignKey(User)    
+
+    id_str = models.CharField(
+        max_length=255,
+    )
+
+    text = models.CharField(
+        max_length=255,
+    )
+
+    lang = models.CharField(
+        max_length=255,
+    )
 
     def __str__(self):
 
-        return ' '.join([
-            self.first_name,
-    def __str__(self):
-
-        return ' '.join([
-            self.username,
-            self.email,
+        return ';'.join([
+            self.user,
+            self.id_str,
+            self.text,
+            self.lang,
         ])
 
 class Voto(models.Model):
@@ -29,14 +55,12 @@ class Voto(models.Model):
         max_length=255,
     )
 
-    num_votos = models.PositiveIntegerField(default=0)
-
-    class Meta:
-        unique_together = ('user', 'num_votos',)
+    confianca = models.DecimalField(default=0,decimal_places=2)
 
     def __str__(self):
 
         return ','.join([
+            self.user,
             self.partido,
-            str(self.num_votos),
+            str(self.confianca),
         ])
