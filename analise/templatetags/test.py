@@ -1,4 +1,7 @@
 from TwitterAPI import TwitterAPI
+from django import template
+
+register = template.Library()
 
 class Oauthtest:
    'Oauth test'
