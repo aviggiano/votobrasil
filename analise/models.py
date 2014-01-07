@@ -55,7 +55,7 @@ class Voto(models.Model):
         max_length=255,
     )
 
-    confianca = models.DecimalField(default=0,decimal_places=2)
+    confianca = models.DecimalField(default=0, max_digits=5, decimal_places=2)
 
     def __str__(self):
 
