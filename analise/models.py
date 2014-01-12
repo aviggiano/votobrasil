@@ -59,7 +59,7 @@ class Tweet(models.Model):
     def __str__(self):
 
         return ';'.join([
-            self.user,
+            str(self.user),
             self.id_str,
             self.text,
             self.lang,
