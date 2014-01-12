@@ -39,7 +39,9 @@ class Tweet(models.Model):
         max_length=255,
     )
 
-    def __main__(self):
+    def __main__(self, _user):
+        user = _user
+
         consumer_key = 'wHz23ocOw4SolyUBWHLqvw'
         consumer_secret = 'HgY1QGTAfcxHFdLichxWlqUqgmLgOFB8QUdSnnvuY0'
         access_token_key = '66269600-HvsEP0pnInp0IgmX23LkJJBjBVwwOxbqtd9FdsrTX'
