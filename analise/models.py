@@ -1,4 +1,5 @@
 from django.db import models
+from TwitterAPI import TwitterAPI
 
 class User(models.Model):
 
@@ -37,6 +38,18 @@ class Tweet(models.Model):
     lang = models.CharField(
         max_length=255,
     )
+
+    def __main__(self):
+        consumer_key = 'wHz23ocOw4SolyUBWHLqvw'
+        consumer_secret = 'HgY1QGTAfcxHFdLichxWlqUqgmLgOFB8QUdSnnvuY0'
+        access_token_key = '66269600-HvsEP0pnInp0IgmX23LkJJBjBVwwOxbqtd9FdsrTX'
+        access_token_secret = '8qOKgkpF9MafSzxz2f7Fb7I207Fpj7hZ5XxE6rl2P6ykW'
+        
+        api = TwitterAPI(consumer_key, consumer_secret, access_token_key, access_token_secret)
+        r = api.request('search/tweets', {'q':'pizza'})
+        for item in r.get_iterator():
+            print item
+
 
     def __str__(self):
 

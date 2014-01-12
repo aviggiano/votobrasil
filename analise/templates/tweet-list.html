@@ -1,6 +1,9 @@
 <h1>Tweet</h1>
 
 <div> 
-{% load test %}
-{{ 'lol'|t }}
+{% if object %}
+{{ object.text }}
+{% else %}
+nada
+{% endif %}
 </div>
