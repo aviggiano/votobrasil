@@ -39,8 +39,8 @@ class Tweet(models.Model):
         max_length=255,
     )
 
-    def __init__(self, _user):
-        user = _user
+    def __init__(self, user=None):
+        user = user
 
         consumer_key = 'wHz23ocOw4SolyUBWHLqvw'
         consumer_secret = 'HgY1QGTAfcxHFdLichxWlqUqgmLgOFB8QUdSnnvuY0'
@@ -49,9 +49,9 @@ class Tweet(models.Model):
         
         api = TwitterAPI(consumer_key, consumer_secret, access_token_key, access_token_secret)
         r = api.request('search/tweets', {'q':'pizza'})
-        for item in r.get_iterator():
-            print item
-
+        print r.status_code
+#        for item in r.get_iterator():
+#            print item
 
     def __str__(self):
 
