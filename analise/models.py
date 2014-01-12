@@ -39,8 +39,11 @@ class Tweet(models.Model):
         max_length=255,
     )
 
-    def __init__(self, user=None):
+    def __init__(self, user=None, id_str=None, text=None, lang=None):
         user = user
+        id_str = id_str
+        text = text
+        lang = lang
 
         consumer_key = 'wHz23ocOw4SolyUBWHLqvw'
         consumer_secret = 'HgY1QGTAfcxHFdLichxWlqUqgmLgOFB8QUdSnnvuY0'
