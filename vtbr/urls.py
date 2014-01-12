@@ -7,6 +7,8 @@ import analise.views
 urlpatterns = patterns('',
                        url(r'^$', analise.views.ListTweetView.as_view(),
                            name='tweet-list',),
+                       url(r'^search$', analise.views.CreateTweetView.as_view(),
+                           name='tweet-create',),
                        
                        # Examples:
                        # url(r'^$', 'vtbr.views.home', name='home'),

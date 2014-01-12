@@ -24,7 +24,7 @@ class User(models.Model):
         ])
 
 class TweetManager(models.Manager):
-    def create_tweet(self, user=None, id_str=None, text=None, lang=None):
+    def create(self, user=None, id_str=None, text=None, lang=None):
         consumer_key = 'wHz23ocOw4SolyUBWHLqvw'
         consumer_secret = 'HgY1QGTAfcxHFdLichxWlqUqgmLgOFB8QUdSnnvuY0'
         access_token_key = '66269600-HvsEP0pnInp0IgmX23LkJJBjBVwwOxbqtd9FdsrTX'
