@@ -3,7 +3,7 @@ from TwitterAPI import TwitterAPI
 
 class User(models.Model):
 
-    username = models.CharField(
+    screen_name = models.CharField(
         max_length=255,
     )
 
@@ -18,10 +18,43 @@ class User(models.Model):
     def __str__(self):
 
         return ';'.join([
-            self.username,
+            self.screen_name,
             self.id_str,
             self.geo,
         ])
+
+class TweetManager(models.Manager):
+    def create_tweet(self, user=None, id_str=None, text=None, lang=None):
+        consumer_key = 'wHz23ocOw4SolyUBWHLqvw'
+        consumer_secret = 'HgY1QGTAfcxHFdLichxWlqUqgmLgOFB8QUdSnnvuY0'
+        access_token_key = '66269600-HvsEP0pnInp0IgmX23LkJJBjBVwwOxbqtd9FdsrTX'
+        access_token_secret = '8qOKgkpF9MafSzxz2f7Fb7I207Fpj7hZ5XxE6rl2P6ykW'
+        
+        api = TwitterAPI(consumer_key, consumer_secret, access_token_key, access_token_secret)
+        r = api.request('search/tweets', {'q':'brasil'})
+        
+        tweet_list = []
+        for i in r.get_iterator():
+            tweet_list.append(i)
+        tw = tweet_list[0]
+
+        user_screen_name = tw['user']['screen_name']
+        user_id_str = tw['user']['id_str']
+        user_geo = tw['user']['location'] # TODO mudar
+
+        user = User(screen_name = user_screen_name,
+                    id_str = user_id_str,
+                    geo = user_geo)
+        id_str = tw['id_str']
+        text = tw['text']
+        lang = tw['lang']
+
+        tweet = self.create(user = user,
+                            id_str = id_str,
+                            text = text,
+                            lang = lang)
+            
+        return tweet
 
 class Tweet(models.Model):
 
@@ -39,22 +72,7 @@ class Tweet(models.Model):
         max_length=255,
     )
 
-    def populate(self, user=None, id_str=None, text=None, lang=None):
-        user = user
-        id_str = id_str
-        text = text
-        lang = lang
-
-        consumer_key = 'wHz23ocOw4SolyUBWHLqvw'
-        consumer_secret = 'HgY1QGTAfcxHFdLichxWlqUqgmLgOFB8QUdSnnvuY0'
-        access_token_key = '66269600-HvsEP0pnInp0IgmX23LkJJBjBVwwOxbqtd9FdsrTX'
-        access_token_secret = '8qOKgkpF9MafSzxz2f7Fb7I207Fpj7hZ5XxE6rl2P6ykW'
-        
-        api = TwitterAPI(consumer_key, consumer_secret, access_token_key, access_token_secret)
-        r = api.request('search/tweets', {'q':'pizza'})
-        print r.status_code
-#        for item in r.get_iterator():
-#            print item
+    objects = TweetManager()
 
     def __str__(self):
 
@@ -82,3 +100,4 @@ class Voto(models.Model):
             self.partido,
             str(self.confianca),
         ])
+
