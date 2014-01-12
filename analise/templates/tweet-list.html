@@ -1,9 +1,7 @@
 <h1>Tweet</h1>
 
 <div> 
-{% if object %}
-{{ object.text }}
-{% else %}
-nada
-{% endif %}
+{% for tweet in object_list %}
+{{ tweet }}
+{% endfor %}
 </div>
