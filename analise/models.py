@@ -3,7 +3,7 @@ from TwitterAPI import TwitterAPI
 
 class User(models.Model):
 
-    user = models.CharField(
+    username = models.CharField(
         max_length=255,
     )
 
@@ -18,7 +18,7 @@ class User(models.Model):
     def __str__(self):
 
         return ';'.join([
-            self.user,
+            self.username,
             self.id_str,
             self.geo,
         ])
@@ -39,7 +39,7 @@ class Tweet(models.Model):
         max_length=255,
     )
 
-    def __main__(self, _user):
+    def __init__(self, _user):
         user = _user
 
         consumer_key = 'wHz23ocOw4SolyUBWHLqvw'
@@ -56,7 +56,7 @@ class Tweet(models.Model):
     def __str__(self):
 
         return ';'.join([
-            self.user,
+            str(self.user),
             self.id_str,
             self.text,
             self.lang,
