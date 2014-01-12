@@ -42,17 +42,17 @@ class TweetManager(models.Manager):
         user_id_str = tw['user']['id_str']
         user_geo = tw['user']['location'] # TODO mudar
 
-        user = User(screen_name = user_screen_name,
+        self.user = User(screen_name = user_screen_name,
                     id_str = user_id_str,
                     geo = user_geo)
-        id_str = tw['id_str']
-        text = tw['text']
-        lang = tw['lang']
+        self.id_str = tw['id_str']
+        self.text = tw['text']
+        self.lang = tw['lang']
 
-        tweet = self.create(user = user,
-                            id_str = id_str,
-                            text = text,
-                            lang = lang)
+        tweet = self.create(self.user = user,
+                            self.id_str = id_str,
+                            self.text = text,
+                            self.lang = lang)
             
         return tweet
 
@@ -73,6 +73,32 @@ class Tweet(models.Model):
     )
 
     objects = TweetManager()
+
+    @classmethod
+    def refresh(self):
+        consumer_key = 'wHz23ocOw4SolyUBWHLqvw'
+        consumer_secret = 'HgY1QGTAfcxHFdLichxWlqUqgmLgOFB8QUdSnnvuY0'
+        access_token_key = '66269600-HvsEP0pnInp0IgmX23LkJJBjBVwwOxbqtd9FdsrTX'
+        access_token_secret = '8qOKgkpF9MafSzxz2f7Fb7I207Fpj7hZ5XxE6rl2P6ykW'
+        
+        api = TwitterAPI(consumer_key, consumer_secret, access_token_key, access_token_secret)
+        r = api.request('search/tweets', {'q':'brasil'})
+        
+        tweet_list = []
+        for i in r.get_iterator():
+            tweet_list.append(i)
+        tw = tweet_list[0]
+
+        user_screen_name = tw['user']['screen_name']
+        user_id_str = tw['user']['id_str']
+        user_geo = tw['user']['location'] # TODO mudar
+
+        self.user = User(screen_name = user_screen_name,
+                    id_str = user_id_str,
+                    geo = user_geo)
+        self.id_str = tw['id_str']
+        self.text = tw['text']
+        self.lang = tw['lang']
 
     def __str__(self):
 
