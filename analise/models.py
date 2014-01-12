@@ -49,10 +49,10 @@ class TweetManager(models.Manager):
         self.text = tw['text']
         self.lang = tw['lang']
 
-        tweet = self.create(self.user = user,
-                            self.id_str = id_str,
-                            self.text = text,
-                            self.lang = lang)
+        tweet = self.create(user = user,
+                            id_str = id_str,
+                            text = text,
+                            lang = lang)
             
         return tweet
 
